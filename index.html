@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Edu Docs Premium</title>
+  <meta name="theme-color" content="#6C3CE1">
+  <meta name="description" content="Documents éducatifs premium pour réussir au Burkina Faso">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <header class="header" id="header">
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-dot"></div>
+        Edu Docs Premium
+      </div>
+      <div class="nav-actions">
+        <button class="icon-btn" id="cartBtn" aria-label="Panier">
+          🛒
+          <span class="badge-count" id="cartCount" style="display:none">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-tag">✨ Burkina Faso • Qualité Premium</div>
+        <h1>Documents Éducatifs<br><span>Pour Réussir</span></h1>
+        <p>Collège • Lycée • Examens nationaux<br>Téléchargement après validation du paiement</p>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-num" id="statsDocsCount">0</div>
+            <div class="stat-label">Documents</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Qualité</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">⚡</div>
+            <div class="stat-label">Rapide</div>
+          </div>
+        </div>
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" id="searchInput" placeholder="Rechercher un document...">
+        </div>
+      </div>
+    </section>
+
+    <section class="filters-section">
+      <div class="filters-scroll">
+        <button class="filter-btn active" data-filter="all">🔥 Tout</button>
+        <button class="filter-btn" data-filter="6ème">6ème</button>
+        <button class="filter-btn" data-filter="5ème">5ème</button>
+        <button class="filter-btn" data-filter="4ème">4ème</button>
+        <button class="filter-btn" data-filter="3ème">3ème</button>
+        <button class="filter-btn" data-filter="Seconde">Seconde</button>
+        <button class="filter-btn" data-filter="Première">Première</button>
+        <button class="filter-btn" data-filter="Terminale">Terminale</button>
+        <button class="filter-btn" data-filter="Mathématiques">Maths</button>
+        <button class="filter-btn" data-filter="Physique">Physique</button>
+        <button class="filter-btn" data-filter="Français">Français</button>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="section-title">📚 Documents disponibles</div>
+      <div id="loadingDocs" class="loading-wrap">
+        <div class="spinner spinner-lg"></div>
+        <span>Chargement des documents...</span>
+      </div>
+      <div class="docs-grid" id="docsGrid" style="display:none"></div>
+    </div>
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="window.location.href='index.html'">
+      <span class="nav-item-icon">🏠</span>
+      <span>Accueil</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='mes-docs.html'">
+      <span class="nav-item-icon">📚</span>
+      <span>Mes docs</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='auth.html'">
+      <span class="nav-item-icon">👤</span>
+      <span>Compte</span>
+    </div>
+  </nav>
+
+  <!-- MODAL PANIER -->
+  <div class="modal" id="cartModal">
+    <div class="modal-bg" id="cartBg"></div>
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <h2>🛒 Mon Panier</h2>
+        <button class="icon-btn" id="closeCart">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="cartItems"><p class="empty"><span class="empty-icon">🛒</span><br>Panier vide</p></div>
+        <div class="cart-total-row">
+          <span>Total</span>
+          <span id="cartTotal">0 FCFA</span>
+        </div>
+        <button class="btn btn-accent btn-full" id="checkoutBtn">💳 Commander maintenant</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CHECKOUT -->
+  <div class="modal" id="checkoutModal">
+    <div class="modal-bg" id="checkoutBg"></div>
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <h2>✍️ Finaliser</h2>
+        <button class="icon-btn" id="closeCheckout">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="checkoutForm">
+          <div class="form-group">
+            <label class="form-label">Nom complet</label>
+            <input class="form-input" type="text" id="clientName" placeholder="Ex: Kouadio Jean" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" id="clientEmail" placeholder="email@exemple.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">WhatsApp</label>
+            <input class="form-input" type="tel" id="clientPhone" placeholder="+226 XX XX XX XX" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">ID Transaction</label>
+            <input class="form-input" type="text" id="transactionId" placeholder="Numéro de transaction" required>
+          </div>
+
+          <div class="pay-info">
+            <div class="pay-info-title">💰 Choisir le mode de paiement</div>
+            <div class="pay-method selected" data-method="orange" onclick="selectPayMethod(this)">
+              <span class="pay-method-icon">🟠</span>
+              <div class="pay-method-info">
+                <div class="pay-method-name">Orange Money</div>
+                <div class="pay-method-num">+226 06 62 57 15</div>
+              </div>
+              <div class="pay-method-radio"></div>
+            </div>
+            <div class="pay-method" data-method="wave" onclick="selectPayMethod(this)">
+              <span class="pay-method-icon">🔵</span>
+              <div class="pay-method-info">
+                <div class="pay-method-name">Wave Money</div>
+                <div class="pay-method-num">+226 06 62 57 15</div>
+              </div>
+              <div class="pay-method-radio"></div>
+            </div>
+            <div style="margin-top:10px;font-size:12px;color:var(--muted);">
+              Total à payer : <strong style="color:var(--accent)" id="cartTotal2">0 FCFA</strong>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-full" id="submitOrder" type="submit">✅ Confirmer la commande</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL SUCCESS -->
+  <div class="modal" id="successModal">
+    <div class="modal-bg" id="successBg"></div>
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-body success-modal">
+        <span class="success-icon">🎉</span>
+        <div class="success-title">Commande enregistrée !</div>
+        <div class="success-sub">Ton paiement est en cours de vérification.<br>Tu recevras tes documents dès validation.</div>
+        <button class="btn btn-primary btn-full" id="closeSuccess">Parfait !</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

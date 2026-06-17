@@ -1,0 +1,27 @@
+{
+  "name": "Edu Docs Premium",
+  "short_name": "Edu Docs",
+  "description": "Documents éducatifs premium pour réussir au Burkina Faso",
+  "start_url": "/vente-docs-app/index.html",
+  "display": "standalone",
+  "background_color": "#0A0A1A",
+  "theme_color": "#6C3CE1",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://placehold.co/192x192/6C3CE1/ffffff?text=ED",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://placehold.co/512x512/6C3CE1/ffffff?text=ED",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["education"],
+  "lang": "fr"
+}

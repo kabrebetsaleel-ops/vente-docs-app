@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Connexion - Edu Docs Premium</title>
+  <meta name="theme-color" content="#6C3CE1">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- PAGE CONNEXION/INSCRIPTION -->
+  <div id="authPage">
+    <div class="auth-container">
+      <div class="auth-header">
+        <div class="auth-logo">📚</div>
+        <div class="auth-title">Edu Docs Premium</div>
+        <div class="auth-subtitle">Connecte-toi pour accéder à tes documents</div>
+      </div>
+
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Connexion</div>
+        <div class="auth-tab" id="tabRegister" onclick="switchTab('register')">Inscription</div>
+      </div>
+
+      <!-- CONNEXION -->
+      <div class="auth-card" id="loginForm">
+        <form id="loginFormEl">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" id="loginEmail" placeholder="email@exemple.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input class="form-input" type="password" id="loginPass" placeholder="••••••••" required>
+          </div>
+          <button class="btn btn-primary btn-full" type="submit" id="loginBtn">
+            🔐 Se connecter
+          </button>
+        </form>
+        <div class="auth-divider">ou</div>
+        <button class="btn btn-ghost btn-full" onclick="switchTab('register')">
+          Pas encore de compte ? S'inscrire
+        </button>
+      </div>
+
+      <!-- INSCRIPTION -->
+      <div class="auth-card" id="registerForm" style="display:none">
+        <form id="registerFormEl">
+          <div class="form-group">
+            <label class="form-label">Nom complet</label>
+            <input class="form-input" type="text" id="regName" placeholder="Ex: Kouadio Jean" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" id="regEmail" placeholder="email@exemple.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">WhatsApp</label>
+            <input class="form-input" type="tel" id="regPhone" placeholder="+226 XX XX XX XX" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input class="form-input" type="password" id="regPass" placeholder="Min. 6 caractères" required minlength="6">
+          </div>
+          <button class="btn btn-primary btn-full" type="submit" id="registerBtn">
+            🚀 Créer mon compte
+          </button>
+        </form>
+        <div class="auth-divider">ou</div>
+        <button class="btn btn-ghost btn-full" onclick="switchTab('login')">
+          Déjà un compte ? Se connecter
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE PROFIL (après connexion) -->
+  <div id="profilePage" style="display:none">
+    <div class="bg-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+
+    <div class="container" style="padding-top:24px; padding-bottom:100px; position:relative; z-index:1;">
+      <div class="page-header">
+        <div class="page-title">Mon Compte</div>
+        <div class="page-subtitle">Gérer mon profil</div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-avatar" id="profileAvatar">?</div>
+        <div>
+          <div class="profile-name" id="profileName">Chargement...</div>
+          <div class="profile-email" id="profileEmail"></div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-title">📋 Mes informations</div>
+        <div class="order-detail">📧 <span id="infoEmail">—</span></div>
+        <div class="order-detail">📱 <span id="infoPhone">—</span></div>
+        <div class="order-detail">📅 Membre depuis <span id="infoDate">—</span></div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-title">⚡ Actions rapides</div>
+        <button class="btn btn-ghost btn-full" style="margin-bottom:10px" onclick="window.location.href='mes-docs.html'">
+          📚 Voir mes documents
+        </button>
+        <button class="btn btn-ghost btn-full" style="margin-bottom:10px" onclick="window.location.href='index.html'">
+          🏠 Retour à l'accueil
+        </button>
+        <button class="btn btn-danger btn-full" id="logoutBtn">
+          🚪 Se déconnecter
+        </button>
+      </div>
+    </div>
+
+    <nav class="bottom-nav">
+      <div class="nav-item" onclick="window.location.href='index.html'">
+        <span class="nav-item-icon">🏠</span>
+        <span>Accueil</span>
+      </div>
+      <div class="nav-item" onclick="window.location.href='mes-docs.html'">
+        <span class="nav-item-icon">📚</span>
+        <span>Mes docs</span>
+      </div>
+      <div class="nav-item active">
+        <span class="nav-item-icon">👤</span>
+        <span>Compte</span>
+      </div>
+    </nav>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="app.js"></script>
+  <script>
+    function switchTab(tab) {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const tabLogin = document.getElementById('tabLogin');
+      const tabRegister = document.getElementById('tabRegister');
+      if (tab === 'login') {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+      } else {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        tabLogin.classList.remove('active');
+        tabRegister.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
